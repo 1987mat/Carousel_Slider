@@ -1,0 +1,22 @@
+{
+  "name": "carousel_slider",
+  "version": "1.0.0",
+  "description": "Custom Carousel Image Slider",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1987mat/Carousel_Slider.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1987mat/Carousel_Slider/issues"
+  },
+  "homepage": "https://github.com/1987mat/Carousel_Slider#readme",
+  "devDependencies": {
+    "eslint": "^8.2.0"
+  }
+}
