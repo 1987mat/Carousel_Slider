@@ -1,1 +1,1 @@
-Custom Carousel Image Slider
+Custom Carousel Image Slider with Vanilla JS

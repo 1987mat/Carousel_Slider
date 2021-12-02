@@ -2,6 +2,7 @@ const slidesArr = Array.from(document.querySelectorAll('.slide'));
 const slider = document.querySelector('.carousel_slider');
 const buttons = document.querySelectorAll('.buttons div');
 const dotDiv = document.querySelector('.dots');
+let timeOut;
 
 function getNextPrev() {
   const activeSlide = document.querySelector('.active');
@@ -25,6 +26,7 @@ function getNextPrev() {
 
   return [next, prev];
 }
+
 getNextPrev();
 
 function getSlidePosition() {
@@ -48,6 +50,7 @@ function getSlidePosition() {
     });
   });
 }
+
 getSlidePosition();
 
 // Event Handler Next and Previous Slide
@@ -59,6 +62,7 @@ buttons.forEach((button) => {
 });
 
 function getNextSlide() {
+  clearTimeout(timeOut);
   const activeSlide = document.querySelector('.active');
   let [next, prev] = getNextPrev();
 
@@ -73,9 +77,12 @@ function getNextSlide() {
   next.style.transform = 'translateX(0%)';
 
   getSlidePosition();
+  activeDot();
+  automaticSlide();
 }
 
 function getPrevSlide() {
+  clearTimeout(timeOut);
   const activeSlide = document.querySelector('.active');
   let [next, prev] = getNextPrev();
 
@@ -90,11 +97,59 @@ function getPrevSlide() {
   prev.style.transform = 'translateX(0%)';
 
   getSlidePosition();
+  activeDot();
+  automaticSlide();
 }
 
-// Dots
-slidesArr.forEach((slide) => {
+// Dynamically generate dots
+for (let i = 0; i < slidesArr.length; i++) {
   const dot = document.createElement('div');
   dot.classList.add('dot');
   dotDiv.appendChild(dot);
-});
+}
+
+// Fill the dots
+function activeDot() {
+  const activeSlide = document.querySelector('.active');
+  const activeSlideIndex = slidesArr.indexOf(activeSlide);
+  const dots = document.querySelectorAll('.dot');
+  let activeDot = dots[activeSlideIndex];
+  activeDot.classList.add('active-dot');
+
+  dots.forEach((dot, index) => {
+    if (index !== activeSlideIndex) {
+      dot.classList.remove('active-dot');
+    }
+  });
+}
+activeDot();
+
+// Switch slide when the dot is clicked
+function clickDot() {
+  const dots = document.querySelectorAll('.dot');
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      switchSlide(index);
+    });
+  });
+}
+
+function switchSlide(index) {
+  clearTimeout(timeOut);
+  slidesArr.forEach((slide) => {
+    slide.classList.remove('active');
+  });
+  slidesArr[index].classList.add('active');
+  getSlidePosition();
+  activeDot();
+  automaticSlide();
+}
+clickDot();
+
+// Auto loop
+function automaticSlide() {
+  timeOut = setTimeout(() => {
+    getNextSlide();
+  }, 5000);
+}
+automaticSlide();
